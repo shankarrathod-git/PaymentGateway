@@ -51,7 +51,7 @@ public class PaymentController {
         //GET /payments/transaction/TXN001
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
    protected Payment updatePayment(@PathVariable Long id, @RequestBody Payment updatepayments){
 
         return paymentService.updatePayment(id, updatepayments);
