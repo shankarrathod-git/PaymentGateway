@@ -1,5 +1,6 @@
 package com.paymentGateway;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 @Service
 public class PaymentService {
+
     @Autowired
     PaymentRepo paymentRepo;
 
@@ -70,4 +72,15 @@ public class PaymentService {
        return null;
 
     }
+
+    //Cache Implementation need to create a test whether the transaction is happening or not
+    @Transactional
+    public void testCache(Long id){
+        System.out.println(paymentRepo.findById(id).get());
+        System.out.println("=======================================");
+        System.out.println(paymentRepo.findById(id).get());
+
+    }
+
+
 }

@@ -1,11 +1,13 @@
 package com.paymentGateway;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+//import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
+@Table( name = "payment")
+@Cacheable
+@org.hibernate.annotations.Cache( usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
