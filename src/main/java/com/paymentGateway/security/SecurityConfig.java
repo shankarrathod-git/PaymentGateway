@@ -46,19 +46,14 @@
 
             http
                     .csrf(csrf -> csrf.disable())
+                    .headers(headers ->
+                            headers.frameOptions(frame ->
+                                    frame.disable()))
                     .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/auth/login")
-                            .permitAll()
-
-                            .requestMatchers("/h2-console/**")
-                            .permitAll()
-
-                            .requestMatchers("/payments/initiate")
-                            .authenticated()
-
-                            .requestMatchers("/payments/bulk")
-                            .hasRole("ADMIN")
-
+                            .requestMatchers("/auth/login").permitAll()
+                            .requestMatchers("/h2-console/**").permitAll()
+                            .requestMatchers("/payments/initiate").authenticated()
+                            .requestMatchers("/payments/bulk").hasRole("ADMIN")
                             .anyRequest().permitAll()
                     )
                     .addFilterBefore(

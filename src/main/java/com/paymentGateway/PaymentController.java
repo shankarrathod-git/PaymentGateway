@@ -18,10 +18,10 @@ public class PaymentController {
         return paymentService.initiatePayment(userId, amount);
     }
 
-    @PostMapping("/payment_body")
-    protected Payment createPayment(@RequestBody Payment payment){
+    @PostMapping("/payment_body/{customerId}")
+    protected Payment createPayment(@RequestBody Payment payment, @PathVariable int customerId){
 
-        return paymentService.createPayment(payment);
+        return paymentService.createPayment(payment, customerId);
         //POST /payments
         //{
         //    "userId": 101,

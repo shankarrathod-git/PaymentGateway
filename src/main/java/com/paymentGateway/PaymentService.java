@@ -1,5 +1,7 @@
 package com.paymentGateway;
 
+import com.paymentGateway.customer.entity.CustomerDTO;
+import com.paymentGateway.customer.service.CustomerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class PaymentService {
     @Autowired
     PaymentRepo paymentRepo;
 
+    @Autowired
+    private CustomerService customerService;
+
     public String initiatePayment(int userId, double amount){
 
        String transactionId = UUID.randomUUID().toString();
@@ -23,13 +28,18 @@ public class PaymentService {
        payment.setTransactionId(transactionId);
        payment.setAmount(amount);
        payment.setStatus("SUCCESSFUL");
+       //payment.setCustomer(cu);
 
        paymentRepo.save(payment);
        return transactionId;
     }
 
     //CREATE -> controller method expects a single Payment object:
-    public Payment createPayment(Payment payment){
+    public Payment createPayment(Payment payment, Integer customerId){
+        CustomerDTO customer =
+                customerService.getCustomer(customerId);
+
+        payment.setCustomer(customer);
 
         return paymentRepo.save(payment);
     }
@@ -66,6 +76,7 @@ public class PaymentService {
            payment.setAmount(updatePayments.getAmount());
            payment.setStatus(updatePayments.getStatus());
            payment.setTransactionId(updatePayments.getTransactionId());
+           payment.setCustomer(updatePayments.getCustomer());
 
            return paymentRepo.save(payment);
        }
@@ -81,6 +92,5 @@ public class PaymentService {
         System.out.println(paymentRepo.findById(id).get());
 
     }
-
 
 }

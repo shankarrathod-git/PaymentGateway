@@ -1,5 +1,6 @@
 package com.paymentGateway;
 
+import com.paymentGateway.customer.entity.CustomerDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 //import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,6 +18,18 @@ public class Payment {
     private String transactionId;
     private double amount;
     private String status;
+
+    public CustomerDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "customer_Id")
+    private CustomerDTO customer;
 
     public Long getId() {
         return id;
